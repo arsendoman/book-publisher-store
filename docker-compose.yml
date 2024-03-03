@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+  mongodb:
+    container_name: book_publisher
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: bookpublisher
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+  bookpiblisher:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    environment:
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_SECRET=${GOOGLE_SECRET}
+      - GOOGLE_CALLBACK_URL=${GOOGLE_CALLBACK_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - OPEN_AI_API_KEY=${OPEN_AI_API_KEY}
+      - ENV=DEVELOPMENT
+    command: npm run start:debug
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 3000:3000
+      - 9229:9229
+
+volumes:
+  mongodb_data_container:
+
+networks:
+  default:
+    external:
+      name: app-tier
+
+
+
