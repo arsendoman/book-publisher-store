@@ -1,6 +1,6 @@
 {
   "name": "@arsendoman/book-publisher-store",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Nest.js package for book publishing and storing",
   "author": "arsendoman",
   "keywords": ["Nest.js", "book", "publisher", "store"],
